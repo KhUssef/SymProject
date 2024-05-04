@@ -1,0 +1,305 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*this is dedicated to the cards (job offers of the site)*/
+
+
+.card {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 0.75rem;
+    background-color: white;
+    width: 300px;
+    height: 370px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1),
+    0 2px 4px -2px rgba(0, 0, 0, .1);
+}
+
+.headercard {
+    position: relative;
+    background-clip: border-box;
+    margin-top: 1.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 15px -3px rgba(33, 150, 243, .4), 0 4px 6px -4px rgba(33, 150, 243, .4);
+    height: 5rem;
+    text-align: center;
+
+}
+
+.activecard {
+    background-color: rgb(33 150 243);
+}
+
+.inactivecard {
+    background-color: red;
+}
+
+.main h1 {
+    color: #e4e3e8;
+    align-self: center;
+}
+
+.infocard {
+    border: none;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.titlecard {
+    color: rgb(38 50 56);
+    letter-spacing: 0;
+    line-height: 1.375;
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.footercard {
+    padding: 0.75rem;
+    border: 1px solid rgb(236 239 241);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(0, 140, 255, 0.082);
+}
+
+.tagcard {
+    font-weight: 300;
+    font-size: .75rem;
+    display: block;
+}
+
+.actioncard {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    border: none;
+    outline: none;
+    box-shadow: 0 4px 6px -1px rgba(33, 150, 243, .4), 0 2px 4px -2px rgba(33, 150, 243, .4);
+    color: rgb(255 255 255);
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: .75rem;
+    padding: 0.75rem 1.5rem;
+    background-color: rgb(33 150 243);
+    border-radius: 0.5rem;
+}
+
+.main li {
+    display: inline-flex;
+    margin: 0.75rem 0.75rem 0.75rem 0.75rem;
+}
+
+/*this is the header part (dedicated to searches)*/
+header {
+    height: 10vh;
+    background-color: rgb(37, 37, 37);
+    position: sticky;
+    align-items: center;
+    top: 0;
+    z-index: 999;
+}
+
+/*this is the searchbar where you can add conditions*/
+.search {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    margin-top: 2vh;
+    width: 20%;
+}
+
+.search__input {
+    font-family: inherit;
+    font-size: inherit;
+    background-color: #f4f2f2;
+    border: none;
+    color: #646464;
+    padding: 0.7rem 1rem;
+    border-radius: 30px;
+    width: 110%;
+    transition: all ease-in-out .5s;
+    margin-right: -2rem;
+}
+
+.search__input:hover,
+.search__input:focus {
+    box-shadow: 0 0 1em #00000013;
+}
+
+.search__input:focus {
+    outline: none;
+    background-color: #f0eeee;
+}
+
+.search__input::-webkit-input-placeholder {
+    font-weight: 100;
+    color: #ccc;
+}
+
+.search__input:focus+.search__button {
+    background-color: #f0eeee;
+}
+
+.search__button {
+    border: none;
+    background-color: #f4f2f2;
+    margin-top: .1em;
+}
+
+.search__button:hover {
+    cursor: pointer;
+}
+
+.search__icon {
+    height: 1.3em;
+    width: 1.3em;
+    fill: #b4b4b4;
+}
+
+h4 {
+    display: inline;
+}
+
+/*theses are the conditions (the red buttons)*/
+#filters {
+    display: inline-flex;
+    margin-left: 1vh;
+}
+
+.filter {
+    width: 150px;
+    height: 50px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    background: rgb(240, 124, 65);
+    border: none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+    margin-left: 2vh;
+}
+
+.filter,
+.filter span {
+    transition: 200ms;
+}
+
+.filter .text {
+    transform: translateX(35px);
+    color: white;
+    font-weight: bold;
+    position: relative;
+    left: -20%;
+}
+
+.filter .icon {
+    position: absolute;
+    border-left: 1px solid #c41b1b;
+    transform: translateX(110px);
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filter img {
+    width: 15px;
+}
+
+.filter:hover {
+    background: #ff3636;
+}
+
+.filter:hover .text {
+    color: transparent;
+}
+
+.filter:hover .icon {
+    width: 150px;
+    border-left: none;
+    transform: translateX(0);
+}
+
+.filter:focus {
+    outline: none;
+}
+
+.filter:active .icon img {
+    transform: scale(0.8);
+}
+
+/*this is the button that activates the search*/
+
+.cta {
+    position: relative;
+    margin: auto;
+    padding: 12px 18px;
+    transition: all 0.2s ease;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.cta:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    border-radius: 50px;
+    background: #b1dae7;
+    width: 45px;
+    height: 45px;
+    transition: all 0.3s ease;
+}
+
+.cta span {
+    position: relative;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: cadetblue;
+}
+
+.cta svg {
+    position: relative;
+    top: 0;
+    margin-left: 10px;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke: #234567;
+    stroke-width: 2;
+    transform: translateX(-5px);
+    transition: all 0.3s ease;
+}
+
+.cta:hover:before {
+    width: 100%;
+    background: #b1dae7;
+}
+
+.cta:hover svg {
+    transform: translateX(0);
+}
+
+.cta:active {
+    transform: scale(0.95);
+}
+.sidebar {
+    height: 90vh;
+}
