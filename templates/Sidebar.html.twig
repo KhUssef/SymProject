@@ -5,12 +5,23 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel='stylesheet' href={{ asset('styles/sidebar.css') }} />
+    {% block stylesheet %}
+    {% endblock %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href={{ asset('pics/logo.svg') }}>
-    <script src = "{{ asset('sidebar.js') }}" type="module" defer></script>
+    <script src = "{{ asset('scripts/sidebar.js') }}" type="module" defer></script>
     <title>tanit</title>
 </head>
 
+{% set arr = {
+    'home': '',
+    'history': '',
+    'new': '',
+    'message': '',
+    'admin': '',
+    'settings': ''
+} %}
+{% set arr = arr|merge({ (var) : 'active'}) %}
 <body>
 <header>
     {% block header %}
@@ -19,7 +30,7 @@
 <nav class='sidebar'>
     <div class="sidebar-header">
         <a class="logo-wrapper">
-            <img src="{{ asset('pics/logo.svg') }}" alt="Logo">
+            <img src="{{ asset('pics/logo.svg') }} " alt="Logo">
             <h2 class="hidden">LOGO</h2>
         </a>
         <button class="toggle-btn">
@@ -27,47 +38,54 @@
         </button>
     </div>
     <div class="sidebar-links">
-        <a class="link {{ home }}" href='{{ path("app_home") }}'>
+        <a class="link {{ arr['home'] }}" href='{{ path("app_home") }}'>
             <img src="{{ asset('pics/home.svg') }}" alt="">
             <span class="hidden">Home</span>
         </a>
-        <a class="link {{ history }}" title='History' href='{{ path("app_history") }}'>
+        <a class="link {{ arr['history'] }}" title='History' href='{{ path("app_history") }}'>
             <img src="{{ asset('pics/history.svg') }}" alt="history">
             <span class="hidden">History</span>
         </a>
 
-        <a class="link {{ new }}" title='new post' href='{{ path("app_new") }}'>
+        <a class="link {{ arr['new'] }}" title='new post' href='{{ path("app_new") }}'>
             <img src="{{ asset('pics/new.svg') }}" alt="new post">
             <span class="hidden">New Post</span>
         </a>
-        <a class="link {{ message }}" title='Messages' href='{{ path("app_message") }}'>
+        <a class="link {{ arr['message'] }}" title='Messages' href='{{ path("app_message") }}'>
             <img src="{{ asset('pics/message.svg') }}" alt="messages">
             <span class="hidden">contact us</span>
         </a>
-        <?php if ($user[6] == 'admin') { ?>
-        <a class="link" title='Admin Dashboard' href='admin.php'>
+
+        {% if admin == true %}
+        <a class="link {{ arr['admin'] }} " title='Admin Dashboard' href='{{ path("app_admin") }}'>
             <img src="{{ asset('pics/admin.svg') }}" alt="messages">
             <span class="hidden">admin dash</span>
         </a>
-        <?php } ?>
+        {% endif %}
     </div>
     <div class="sidebar-bottom">
         <div class="sidebar-links">
-            <a class="link" title='Settings' href='settings.php'>
+            <a class="link {{ arr['settings'] }} " title='Settings' href='{{ path("app_settings") }}'>
                 <img src="{{ asset('pics/settings.svg') }}" alt="">
                 <span class="hidden">Settings</span>
             </a>
         </div>
 
         <div class="user-profile">
-            <div class="user-avatar" title='logout' id="settings">
+            {% if (mail == '') %}
+            <a class="user-avatar" title='login' id="settings" href="{{ path('app_login') }}">
                 <img src="{{ asset('pics/default.jpg') }}" alt="">
-            </div>
+            </a>
+            {% else %}
+            <a class="user-avatar" title='logout' id="settings" href="{{ path('app_logout') }}">
+                <img src="{{ asset('pics/default.jpg') }}" alt="">
+            </a>
+            {% endif %}
             <div class="user-details hidden">
-                <p title='<?= $user[0] ?>' class="username">
+                <p title='{{ name }}' class="username">
                     {{ name }}
                 </p>
-                <p title='<?= $user[1] ?>' class="user-email">
+                <p title='{{ mail}}' class="user-email">
                     {{ mail }}
                 </p>
             </div>

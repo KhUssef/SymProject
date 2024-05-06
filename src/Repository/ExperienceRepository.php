@@ -40,4 +40,26 @@ class ExperienceRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    /**
+    //     * @return Experience[] Returns an array of Experience objects
+    //     */
+    public function findexps(): array
+    {
+        return $this->createQueryBuilder('e')
+            ->groupBy('e.name')->getQuery()->getResult();
+    }
+    public function findByExpression($value): array
+    {
+        $query = $this->createQueryBuilder('e')
+            ->andWhere('e.name = :name')
+            ->setParameter('name', $value[0]);
+        if (strpos($value[1], 'and')) {
+            $query->andWhere( "(e.years " . substr($value[1], 0, strpos($value[1], 'and') + 3) . " e.years " . substr($value[1], strpos($value[1], 'and') + 3, strlen($value[1])) . ')');
+        } else if (strpos($value[1], 'or')) {
+            $query->andWhere('(e.years ' . substr($value[1], 0, strpos($value[1], 'or') + 2) . ' e.years ' . substr($value[1], strpos($value[1], 'or') + 3, strlen($value[1])) . ')');
+        } else {
+            $query->andWhere('e.years ' . ' ' . $value[1]);
+        }
+        return $query->getQuery()->getResult();
+    }
 }

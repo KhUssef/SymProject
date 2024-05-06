@@ -6,11 +6,13 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -36,19 +38,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $fullName = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?experience $exp1 = null;
-
-    #[ORM\ManyToOne]
-    private ?experience $exp2 = null;
-
-    #[ORM\ManyToOne]
-    private ?experience $exp3 = null;
-
-    #[ORM\ManyToOne]
-    private ?experience $exp4 = null;
-
     /**
      * @var Collection<int, Job>
      */
@@ -61,10 +50,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Job::class, mappedBy: 'employee')]
     private Collection $accomplishment;
 
+    /**
+     * @var Collection<int, Experience>
+     */
+    #[ORM\ManyToMany(targetEntity: Experience::class, inversedBy: 'users')]
+    private Collection $experience;
     public function __construct()
     {
         $this->job = new ArrayCollection();
         $this->accomplishment = new ArrayCollection();
+        $this->exp = new ArrayCollection();
+        $this->experience = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -154,54 +150,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getExp1(): ?experience
-    {
-        return $this->exp1;
-    }
-
-    public function setExp1(?experience $exp1): static
-    {
-        $this->exp1 = $exp1;
-
-        return $this;
-    }
-
-    public function getExp2(): ?experience
-    {
-        return $this->exp2;
-    }
-
-    public function setExp2(?experience $exp2): static
-    {
-        $this->exp2 = $exp2;
-
-        return $this;
-    }
-
-    public function getExp3(): ?experience
-    {
-        return $this->exp3;
-    }
-
-    public function setExp3(?experience $exp3): static
-    {
-        $this->exp3 = $exp3;
-
-        return $this;
-    }
-
-    public function getExp4(): ?experience
-    {
-        return $this->exp4;
-    }
-
-    public function setExp4(?experience $exp4): static
-    {
-        $this->exp4 = $exp4;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Job>
      */
@@ -258,6 +206,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $accomplishment->setEmployee(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Experience>
+     */
+    public function getExperience(): Collection
+    {
+        return $this->experience;
+    }
+    public function getExperienceArray(): array
+    {
+        $exps = array();
+        foreach($this->experience as $exp){
+            array_push($exps, $exp->getName() . ' : <= ' . $exp->getYears());
+        }
+        return $exps;
+    }
+
+    public function addExperience(Experience $experience): static
+    {
+        if (!$this->experience->contains($experience)) {
+            $this->experience->add($experience);
+        }
+
+        return $this;
+    }
+
+    public function removeExperience(Experience $experience): static
+    {
+        $this->experience->removeElement($experience);
 
         return $this;
     }

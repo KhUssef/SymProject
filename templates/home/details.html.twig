@@ -1,0 +1,41 @@
+{% extends 'Sidebar.html.twig' %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{{ asset('styles/details.css') }}">
+{% endblock %}
+{% block main %}
+<div class="card">
+    <div class="card">
+        <div class=" headercard {{ job.state }}card ">
+            <h1>
+                {{  job.state }}
+            </h1>
+        </div>
+        <div class="infocard">
+            <p class="titlecard">
+                {{  job.name }}
+            </p>
+            <p>
+                <h4>Price :
+                {{  job.price }}
+                $</h4>
+            </p>
+            <p class ='description'>
+                {{  job.description}}
+            </p>
+            <p class="tagcard">requirements : #
+                {{  job.getExperience()[0].name }}>={{  job.getExperience()[0].years }} years
+                #{{  job.getExperience()[1].name }}>={{  job.getExperience()[1].years }}
+            </p>
+            {% if job.master.id != id %}
+        <a href='{{ path('apply', {id:job.id}) }}'><button type="button" class="actioncard">apply
+            </button></a>
+            {% else %}
+        <a href='{{ path("applicants", {id:job.id}) }}'><button type="button" class="actioncard">check applicants
+            </button></a>
+            {% endif %}
+            {% if(job.master.id == id or admin) %}
+        <a href='{{ path('delete', {id:job.id}) }}'> <button type="button" class="actioncard delete">delete
+            </button></a>
+            {% endif %}
+    </div>
+{% endblock %}

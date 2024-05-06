@@ -26,15 +26,6 @@ class Job
 
     #[ORM\Column(length: 255)]
     private ?string $state = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?experience $req1 = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?experience $req2 = null;
-
     /**
      * @var Collection<int, User>
      */
@@ -48,9 +39,17 @@ class Job
     #[ORM\ManyToOne(inversedBy: 'accomplishment')]
     private ?User $employee = null;
 
+    /**
+     * @var Collection<int, Experience>
+     */
+    #[ORM\ManyToMany(targetEntity: Experience::class, inversedBy: 'jobs')]
+    private Collection $experience;
+
     public function __construct()
     {
         $this->applicants = new ArrayCollection();
+        $this->requirement = new ArrayCollection();
+        $this->experience = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -113,30 +112,6 @@ class Job
         return $this;
     }
 
-    public function getReq1(): ?experience
-    {
-        return $this->req1;
-    }
-
-    public function setReq1(?experience $req1): static
-    {
-        $this->req1 = $req1;
-
-        return $this;
-    }
-
-    public function getReq2(): ?experience
-    {
-        return $this->req2;
-    }
-
-    public function setReq2(?experience $req2): static
-    {
-        $this->req2 = $req2;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, User>
      */
@@ -161,6 +136,12 @@ class Job
         return $this;
     }
 
+    public function removeAllApplicants(): static
+    {
+        $this->applicants->clear();
+        return $this;
+    }
+
     public function getMaster(): ?User
     {
         return $this->master;
@@ -181,6 +162,29 @@ class Job
     public function setEmployee(?User $employee): static
     {
         $this->employee = $employee;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Experience>
+     */
+    public function getExperience(): Collection
+    {
+        return $this->experience;
+    }
+
+    public function addExperience(Experience $experience): static
+    {
+        if (!$this->experience->contains($experience)) {
+            $this->experience->add($experience);
+        }
+        return $this;
+    }
+
+    public function removeExperience(Experience $experience): static
+    {
+        $this->experience->removeElement($experience);
 
         return $this;
     }

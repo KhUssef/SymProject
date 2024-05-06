@@ -1,0 +1,55 @@
+{% extends 'Sidebar.html.twig' %}
+{% block stylesheet %}
+    <link rel='stylesheet' href={{ asset('styles/applicants.css') }} />
+{% endblock %}
+
+{% block main %}
+    {% if job.state == 'active' %}
+    {% for user in job.applicants %}
+    <div class="card">
+        <div class="infocard">
+            <h1 class="titlecard">
+                {{ user.fullName }}
+            </h1>
+            <p>
+            </p>
+            <p class='description'>
+                {{ user.email }}
+            </p>
+            <p class="tagcard">experience : #
+                {{ user.experience[0].name }} :  {{ user.experience[0].years }} years #
+                {{ user.experience[1].name }} :  {{ user.experience[1].years }} years #
+                {{ user.experience[2].name }} :  {{ user.experience[2].years }} years #
+                {{ user.experience[3].name }} :  {{ user.experience[3].years }} years
+            </p>
+            <a href={{ path('accept', {jid:job.id, uid:user.id}) }}> <button type="button" class="actioncard ">accept
+                </button></a>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    {% set user = job.employee %}
+        <div class="card">
+            <div class="infocard">
+                <h1 class="titlecard">
+                    {{ user.fullName }}
+                </h1>
+                <p>
+                </p>
+                <p class='description'>
+                    {{ user.email }}
+                </p>
+                <p class="tagcard">experience : #
+                    {{ user.experience[0].name }} :  {{ user.experience[0].years }} years #
+                    {{ user.experience[1].name }} :  {{ user.experience[1].years }} years #
+                    {{ user.experience[2].name }} :  {{ user.experience[2].years }} years #
+                    {{ user.experience[3].name }} :  {{ user.experience[3].years }} years
+                </p>
+
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+

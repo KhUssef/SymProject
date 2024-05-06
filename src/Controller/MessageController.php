@@ -14,10 +14,7 @@ class MessageController extends AbstractController
         return $this->render('message/index.html.twig', [
             'name' => 'jsp',
             'mail' => "idk",
-            'home' => '',
-            'history' => '',
-            'message' => 'active',
-            'new' => ''
+            'var' => 'message'
         ]);
     }
 }

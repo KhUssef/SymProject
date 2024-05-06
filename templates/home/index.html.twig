@@ -1,4 +1,70 @@
 {% extends 'Sidebar.html.twig' %}
+
+{% block stylesheet %}
+    <link rel='stylesheet' href={{ asset('styles/home.css') }} />
+{% endblock %}
+{% block header %}
+    <div class="search">
+        <label for='addfilter'></label><input type="text" id='addfilter' class="search__input" placeholder="add filters" list='options'>
+        <datalist id="options">
+            <option value="description : idktbh"></option>
+            <option value="price : >5 and <500"></option>
+            {% for exp in exps %}
+                <option value=" {{ exp.name }} :>1 or <=10"></option>
+            {% endfor %}
+        </datalist>
+        <button class="search__button">
+            <img class="search__icon" src='{{ asset("pics/add.svg")}}' alt="add">
+        </button>
+    </div>
+    <div id='filters'>
+        {% for a in filters %}
+        <button class="noselect filter" title="{{ a }}"><span class="text">
+                    {{ a|slice(0, 11) }}
+                </span><span class="icon"><img src="{{ asset('pics/ico.svg') }}" alt="kysx2"></span></button>
+        {% endfor %}
+    </div>
+    <button class="cta">
+        <span>search</span>
+        <svg width="15px" height="10px" viewBox="0 0 13 10">
+            <path d="M1,5 L11,5"></path>
+            <polyline points="8 1 12 5 8 9"></polyline>
+        </svg>
+    </button>
+{% endblock %}
 {% block main %}
-    <h1>idk</h1>
+    <ul>
+    {% for job in jobs %}
+    <li>
+        <div class="card">
+            <div class=" headercard {{ job.state }}card ">
+                <h1>
+                    {{  job.state }}
+                </h1>
+            </div>
+            <div class="infocard">
+                <p class="titlecard">
+                    {{  job.name }}
+                </p>
+                <p>
+                <h4>Price : </h4>
+                {{  job.price }}
+                <h4> $</h4>
+                </p>
+                <p>
+                    {{  job.description|slice(0, 100)}}...
+                </p>
+            </div>
+            <div class="footercard">
+                <p class="tagcard">#
+                    {{  job.getExperience()[0].name }}>={{  job.getExperience()[0].years }}
+                    #{{  job.getExperience()[1].name }}>={{  job.getExperience()[1].years }}
+                </p>
+                <a href={{ path('app_details', {id:job.id}) }}><button type="button" class="actioncard">Details
+                    </button></a>
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+    </ul>
 {% endblock %}
