@@ -62,4 +62,23 @@ class ExperienceRepository extends ServiceEntityRepository
         }
         return $query->getQuery()->getResult();
     }
+    public function addExperience($name, $years) : Experience
+    {
+
+        $query = $this->createQueryBuilder('e')
+            ->andWhere('e.name = :name')
+            ->setParameter('name', $name)
+            ->andWhere('e.years = :years')
+            ->setParameter('years', $years);
+        $experience = $query->getQuery()->getResult();
+        $experience = count($experience) > 0 ? $experience[0] : null;
+        if ($experience == null) {
+            $experience = new Experience();
+            $experience->setName($name)->setYears($years);
+            $this->getEntityManager()->persist($experience);
+            $this->getEntityManager()->flush();
+        }
+        return $experience;
+    }
+
 }

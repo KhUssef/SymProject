@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ asset('styles/details.css') }}">
+    <link rel = 'icon' href = "{{ asset('pics/logo.svg') }}" >
+    <title>Document</title>
+</head>
+<body>
+<div class="main">
+<div class="card">
+    <div class="card">
+        <div class=" headercard {{ job.state }}card ">
+            <h1>
+                state : {{  job.state }}
+            </h1>
+        </div>
+        <div class="infocard">
+            <p class="titlecard">
+                {{  job.name }}
+            </p>
+            <p>
+            <h4>Price :
+                {{  job.price }}
+                $</h4>
+            </p>
+            <p class ='description'>
+                {{  job.description}}
+            </p>
+            <p class="tagcard">requirements : #
+                {{  job.getExperience()[0].name }}>={{  job.getExperience()[0].years }} years
+                #{{  job.getExperience()[1].name }}>={{  job.getExperience()[1].years }}
+            </p>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

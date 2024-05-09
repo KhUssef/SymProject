@@ -37,5 +37,9 @@
         <a href='{{ path('delete', {id:job.id}) }}'> <button type="button" class="actioncard delete">delete
             </button></a>
             {% endif %}
+        <a href='{{ path('generate_pdf', {id:job.id}) }}'> <button type="button" class="actioncard accept">generate pdf
+                </button></a>
     </div>
+
+</div>
 {% endblock %}

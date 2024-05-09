@@ -1,4 +1,48 @@
 {% extends 'Sidebar.html.twig' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('styles/new.css') }}">
+    <script src = "{{ asset("scripts/new.js") }}" type = "module" defer></script>
+{% endblock %}
+
 {% block main %}
-    <h1>kys</h1>
+    <form class="form" action={{ path('create') }} method="post" enctype="multipart/form-data">
+        <p class="message">All fields are required. </p>
+        <label>
+            <input required placeholder="" type="text" class="input" name='name'>
+            <span>Name</span>
+        </label>
+        <label>
+            <input required placeholder="" type="number" class="input" name='price'>
+            <span>price</span>
+        </label>
+        <div class="flex">
+            <label>
+                <input required placeholder="" autocomplete='on' type="text" class="input" list='options'
+                       name='req1'>
+                <span>requirement 1</span>
+            </label>
+
+            <label>
+                <input required placeholder="" type="number" min='0' class="input" name='req1y'>
+                <span>years</span>
+            </label>
+        </div>
+        <div class="flex">
+            <label>
+                <input required="" placeholder="" autocomplete='on' type="text" class="input" list='options'
+                       name='req2'>
+                <span>requirement 2</span>
+            </label>
+
+            <label>
+                <input required placeholder="" type="number" min='0' class="input" name='req2y'>
+                <span>years</span>
+            </label>
+        </div>
+        <textarea id='description' placeholder="Description" class="input" name='description'></textarea>
+        <input type="file" name='file' id="real-file" hidden="hidden" accept='.txt' />
+        <button type="button" id="custom-button">CHOOSE A FILE</button>
+        <span id="custom-text">No file chosen, yet.</span>
+        <button class="submit">Submit</button>
+    </form>
 {% endblock %}

@@ -32,7 +32,7 @@
         <div class="card">
             <div class="infocard">
                 <h1 class="titlecard">
-                    {{ user.fullName }}
+                    Fulfilled by :{{ user.fullName }}
                 </h1>
                 <p>
                 </p>
@@ -40,12 +40,11 @@
                     {{ user.email }}
                 </p>
                 <p class="tagcard">experience : #
-                    {{ user.experience[0].name }} :  {{ user.experience[0].years }} years #
-                    {{ user.experience[1].name }} :  {{ user.experience[1].years }} years #
-                    {{ user.experience[2].name }} :  {{ user.experience[2].years }} years #
-                    {{ user.experience[3].name }} :  {{ user.experience[3].years }} years
+                    {{ user.experience[1].name }} : {{ user.experience[1].years }} years #
+                    {{ user.experience[2].name }} : {{ user.experience[2].years }} years #
+                    {{ user.experience[0].name }} : {{ user.experience[0].years }} years #
+                    {{ user.experience[3].name }} : {{ user.experience[3].years }} years
                 </p>
-
             </div>
         </div>
     {% endif %}

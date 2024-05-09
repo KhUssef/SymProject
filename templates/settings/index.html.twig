@@ -1,4 +1,63 @@
 {% extends 'Sidebar.html.twig' %}
+{% block title %}change{% endblock %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('styles/new.css') }}">
+    <script src = "{{ asset('scripts/change.js') }}" type = "module" defer> </script>
+    <style>
+        .form label .input:valid+span {
+            color: gray;
+        }
+    </style>
+{% endblock %}
+
 {% block main %}
-    <h1>kys</h1>
+    <datalist id="options">
+        {% for app in exps %}
+        <option value=" {{ app.name }}"></option>
+        {% endfor %}
+    </datalist>
+
+    <form class="form" action="{{ path('app_settings_update') }}" method="post" enctype="multipart/form-data">
+        <p class="title">enter your changes </p>
+        <p class="message">full Name: </p>
+        <label>
+            <input placeholder="" type="text" class="input" name='name'>
+            <span>
+                    {{ name }}
+                </span>
+        </label>
+        <p class="message">email: </p>
+        <label>
+            <input placeholder="" type="text" class="input" name='mail'>
+            <span>
+                    {{ mail }}
+                </span>
+        </label>
+        <p class="message">experience :</p>
+        {% for i in 0..3%}
+        <div class="flex">
+            <label>
+                <input placeholder="" autocomplete='on' type="text" class="input" list='options'
+                       name='req{{ i }}'>
+                <span>
+                        {{ experience[i].name}}
+                    </span>
+            </label>
+
+            <label>
+                <input placeholder="" type="number" min='0' class="input" name='req{{ i }}y'>
+                <span>
+                        {{ experience[i].years }}
+                    </span>
+            </label>
+        </div>
+        {% endfor %}
+        <label>
+            <input placeholder="" type="password" class="input" name='npwd'>
+            <span>
+                    new password
+                </span>
+        </label>
+        <button class="submit" type="submit">Submit</button>
+    </form>
 {% endblock %}

@@ -1,20 +1,36 @@
-{% extends 'base.html.twig' %}
+{% extends 'sidebar.html.twig' %}
+{% block  stylesheet %}
+    <link rel="stylesheet" href={{ asset('styles/applicants.css') }}>
+{% endblock %}
 
-{% block title %}Hello AdminController!{% endblock %}
-
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>D:/sym/SymProject/src/Controller/AdminController.php</code></li>
-        <li>Your template at <code>D:/sym/SymProject/templates/admin/index.html.twig</code></li>
-    </ul>
-</div>
+{% block main %}
+    {% for app in users %}
+        {% if 'ROLE_ADMIN' in app.roles %}
+        {% set role = 'admin' %}
+        {% else %}
+        {% set role = 'user' %}
+        {% endif %}
+        <div class="card">
+            <div class="infocard">
+                <h1 class="titlecard">
+                    {{ app.fullName }}
+                </h1>
+                <p>
+                </p>
+                <p class='description'>
+                    {{ app.email }}<br>Type:
+                    {{ role }}
+                </p>
+                <p class="tagcard">experience : #
+                    {% for a in app.ExperienceArray %}
+                        {{ a }} years #
+                    {% endfor %}
+                </p>
+                <a href={{ path('app_admin_user_delete', { id:app.id}) }}> <button type="button" class="actioncard delete ">delete
+                    </button></a>
+                <a href={{ path('app_admin_user', {id:app.id}) }}> <button type="button" class="actioncard">make admin
+                    </button></a>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}

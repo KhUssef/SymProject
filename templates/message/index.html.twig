@@ -1,4 +1,16 @@
 {% extends 'Sidebar.html.twig' %}
+{% block title %}Contact us{% endblock %}
+{% block stylesheet %}
+    <link rel="stylesheet" href= {{ asset('styles/mssage.css') }} >
+{% endblock %}
 {% block main %}
-    <h1>kys</h1>
+    <form class="form" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="eaeb0a12-ae06-4eaf-bf21-4dab047952b8">
+        <div class="title">Contact us</div>
+        <input type="email" placeholder="Your email" value="{{ mail }}" class="input" name='email'>
+        <input type="text" placeholder="Your full name" value="{{ name }}" class="input" name='name'>
+        <textarea placeholder="Your message" name='message'></textarea>
+        <input type="hidden" name="redirect" value={{url('app_email') }}>
+        <button>Submit</button>
+    </form>
 {% endblock %}

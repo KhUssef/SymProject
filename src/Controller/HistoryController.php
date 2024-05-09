@@ -42,10 +42,13 @@ class HistoryController extends AbstractController
         $job = $jobRepository->find($id);
         $name = $this->getUser()->getFullName();
         $mail = $this->getUser()->getEmail();
+        $admin = false;
+        if($this->getUser() != null)
+            $admin = in_array('ROLE_ADMIN', $this->getUser()->getRoles());
         if($job!=null && ($this->getUser()->getId() == $job->getMaster()->getId() || in_array('ROLE_ADMIN', $this->getUser()->getRoles()))){
             return $this->render('history/applicant.html.twig', [
                 'job' => $job,
-                'admin' => in_array('ROLE_ADMIN', $this->getUser()->getRoles()),
+                'admin' => $admin,
                 'var' => '',
                 'name' => $name,
                 'mail' => $mail
